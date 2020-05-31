@@ -42,13 +42,7 @@ train_set=confirmed.iloc[:length]
 test_set=confirmed.iloc[length:]
 
 
-model=Prophet(interval_width=0.95,
-               weekly_seasonality=False,
-              daily_seasonality=False,
-              yearly_seasonality=False)
-model.add_seasonality('daily', period=1, fourier_order=5)
-model.add_seasonality('weekly', period=7, fourier_order=35)
-model.add_seasonality('Monthly', period=30.5, fourier_order=20)
+model=Prophet(interval_width=0.95)
 
 model.fit(train_set)
 #predict 20 days
