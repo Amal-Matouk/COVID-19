@@ -48,7 +48,20 @@ fig = px.pie(World_Data,
                         title='Total Cases')
 fig.show()
 
-
+#plot Map
+#Define Color scale
+Color_Scale = ["#eafcfd","#b7e0e4","#85c5d3","#60a7c7","#4989bc","#3e6ab0","#3d4b94","#323268","#1d1d3b","#030512"]
+fig = px.choropleth(Confirmed_Cases_Per_Country,
+                    locations=Confirmed_Cases_Per_Country['Country'],
+                    color=Confirmed_Cases_Per_Country['Confirmed'],
+                    locationmode='country names',
+                    hover_name=Confirmed_Cases_Per_Country['Country'],
+                    color_continuous_scale=Color_Scale)
+fig.update_layout(
+        margin={"r":0,"t":0,"l":0,"b":0},
+        title='Confirmed Cases In The World',
+)
+fig.show()
 
 
 # Confirmed Cases Per Country sotred desc
