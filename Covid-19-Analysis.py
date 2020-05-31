@@ -31,7 +31,7 @@ Data.dtypes
 World_Data = pd.DataFrame()
 
 #Calculate Confirmed ,Deaths, Recoverd cases
-sums=Data.sum(axis = 0, skipna = True).to_frame()
+sums=Data.sum(axis = 0, skipna = True ,numeric_only = True).to_frame()
 World_Data =sums.T
 
 #Calculate Active cases
@@ -41,12 +41,12 @@ World_Data["Active"] = World_Data["Confirmed"] - World_Data["Deaths"] - World_Da
 World_Data
 
 #plot pie
-World_Data_Pie = px.pie(World_Data,
+fig = px.pie(World_Data,
                         values = World_Data.iloc[0],
                         names= World_Data.columns.values,
                         color_discrete_sequence=px.colors.sequential.RdBu,
                         title='Total Cases')
-plot(World_Data_Pie)
+fig.show()
 
 
 
@@ -63,7 +63,7 @@ fig = px.bar(Confirmed_Cases_Per_Country[0:20],
              y = 'Confirmed',
              color='Country',
              title='Top(20) Countries - Confirmed')
-plot(fig)
+fig.show()
 
 # Deaths Cases Per Country sotred desc
 Death_Cases_Per_Country = Data.groupby(["Country"])["Deaths"].sum().reset_index().sort_values("Deaths",ascending=False)
@@ -77,7 +77,7 @@ fig = px.bar(Death_Cases_Per_Country[0:20],
              y = 'Deaths',
              color='Country',
              title='Top(20) Countries - Deaths')
-plot(fig)
+fig.show()
 
 
 # Recovered Cases Per Country sotred desc
@@ -92,7 +92,7 @@ fig = px.bar(Recovered_Cases_Per_Country[0:20],
              y = 'Recovered',
              color='Country',
              title='Top(20) Countries - Recovered')
-plot(fig)
+fig.show()
 
 
 Info_Table = pd.DataFrame()
@@ -130,10 +130,10 @@ Table_Fig = go.Figure(data=[go.Table(
                align='left'))
 ])
 
-plot(Table_Fig)
+Table_Fig.show()
 
 # Total Cases Per Date
-Total_Cases_Per_Date  = Data.groupby(["Date"])["Confirmed","Deaths","Recovered"].sum().reset_index()
+Total_Cases_Per_Date  = Data.groupby(["Date"])[["Confirmed","Deaths","Recovered"]].sum().reset_index()
 
 #Plot Confirmed Per Date
 fig = px.line(Total_Cases_Per_Date, x="Date", y="Confirmed", title='Confirmed Per Date')
